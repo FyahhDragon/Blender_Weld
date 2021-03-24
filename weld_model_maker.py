@@ -1,7 +1,7 @@
 import bpy
 
 bl_info = {
-    "name": "Mesh: Weld Generator",
+    "name": "Weld Model Maker",
     "author": "Fyahh Dragon <dragon.fyahh@gmail.com>",
     "version": (0, 1),
     "blender": (2, 91, 0),
@@ -20,13 +20,20 @@ class MESH_OT_create_Weld(bpy.types.Operator):
     bl_label = "Generate Weld"  # label that appears in menus and buttons.
     bl_options = {'REGISTER', 'UNDO'}
 
+    size: bpy.props.FloatProperty(
+        name="Size",
+        description="Size of Weld model",
+        default=0.5,
+        min=0.1, soft_max=3,
+    )
+
     @classmethod
     def poll(cls, context):
         return context.area.type == 'VIEW_3D'
 
     def execute(self, context):
         bpy.ops.mesh.primitive_cube_add(
-                size=0.5,
+                size=self.size,
                 location=(0, 0, 2),
                 rotation=(0, 45, 0))
 
